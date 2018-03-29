@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Алиса Смирнова](https://up.htmlacademy.ru/javascript/13/user/296487).
-* Наставник: `Неизвестно`.
+* Наставник: `Артем Коновалов`.
 
 ---
 
