@@ -68,3 +68,19 @@ for (var i = 0; i < pictures.length; i++) {
 }
 
 document.querySelector('.pictures').appendChild(fragment);
+
+var bigPhoto = document.querySelector('.big-picture');
+
+bigPhoto.querySelector('img').src = pictures[0].url;
+
+bigPhoto.querySelector('.likes-count').innerText = pictures[0].likes;
+bigPhoto.querySelector('.comments-count').innerText = pictures[0].comments.length;
+
+var commentsContainer = document.querySelector('.social__comments');
+
+console.log(pictures[0].comments.length);
+pictures[0].comments.forEach(function(item){
+  var comment = '<li class="social__comment social__comment--text"> <img class="social__picture" src="img/avatar-' + randomInteger(1, 6) +'.svg" alt="Аватар комментатора фотографии" width="35" height="35">'+ item +'</li>';
+  console.log(comment);
+  commentsContainer.insertAdjacentHTML('beforeend', comment);
+});
