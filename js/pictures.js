@@ -77,14 +77,14 @@ bigPhoto.querySelector('.comments-count').innerText = pictures[0].comments.lengt
 
 var commentsContainer = document.querySelector('.social__comments');
 
-pictures[0].comments.forEach(function(item){
-  var comment = '<li class="social__comment social__comment--text"> <img class="social__picture" src="img/avatar-' + randomInteger(1, 6) +'.svg" alt="Аватар комментатора фотографии" width="35" height="35">'+ item +'</li>';
+pictures[0].comments.forEach(function (item) {
+  var comment = '<li class="social__comment social__comment--text"> <img class="social__picture" src="img/avatar-' + randomInteger(1, 6) + '.svg" alt="Аватар комментатора фотографии" width="35" height="35">' + item + '</li>';
   commentsContainer.insertAdjacentHTML('beforeend', comment);
 });
 
 for (var i = 0; i < pictures[0].comments.length; i++) {
   var currentItem = pictures[0].comments[i];
-  var comment = '<li class="social__comment social__comment--text"> <img class="social__picture" src="img/avatar-' + randomInteger(1, 6) +'.svg" alt="Аватар комментатора фотографии" width="35" height="35">'+ currentItem +'</li>';
+  var comment = '<li class="social__comment social__comment--text"> <img class="social__picture" src="img/avatar-' + randomInteger(1, 6) + '.svg" alt="Аватар комментатора фотографии" width="35" height="35">' + currentItem + '</li>';
   commentsContainer.insertAdjacentHTML('beforeend', comment);
 }
 
