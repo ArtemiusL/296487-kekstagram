@@ -1,6 +1,5 @@
 'use strict';
 
-
 var comments = ['Всё отлично!', 'В целом всё неплохо. Но не всё.', 'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.', 'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.', 'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.', 'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
 
 var descriptions = ['Тестим новую камеру!', 'Затусили с друзьями на море', 'Как же круто тут кормят', 'Отдыхаем...', 'Цените каждое мгновенье. Цените тех, кто рядом с вами и отгоняйте все сомненья.', 'Не обижайте всех словами......', 'Вот это тачка!'];
@@ -78,9 +77,17 @@ bigPhoto.querySelector('.comments-count').innerText = pictures[0].comments.lengt
 
 var commentsContainer = document.querySelector('.social__comments');
 
-console.log(pictures[0].comments.length);
 pictures[0].comments.forEach(function(item){
   var comment = '<li class="social__comment social__comment--text"> <img class="social__picture" src="img/avatar-' + randomInteger(1, 6) +'.svg" alt="Аватар комментатора фотографии" width="35" height="35">'+ item +'</li>';
-  console.log(comment);
   commentsContainer.insertAdjacentHTML('beforeend', comment);
 });
+
+for (var i = 0; i < pictures[0].comments.length; i++) {
+  var currentItem = pictures[0].comments[i];
+  var comment = '<li class="social__comment social__comment--text"> <img class="social__picture" src="img/avatar-' + randomInteger(1, 6) +'.svg" alt="Аватар комментатора фотографии" width="35" height="35">'+ currentItem +'</li>';
+  commentsContainer.insertAdjacentHTML('beforeend', comment);
+}
+
+bigPhoto.classList.remove('hidden');
+document.querySelector('.social__comment-count').classList.add('visually-hidden');
+document.querySelector('.social__comment-loadmore').classList.add('visually-hidden');
