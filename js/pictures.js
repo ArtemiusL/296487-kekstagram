@@ -66,28 +66,126 @@ for (var i = 0; i < pictures.length; i++) {
   fragment.appendChild(newElement);
 }
 
-document.querySelector('.pictures').appendChild(fragment);
+var picturesContainer = document.querySelector('.pictures');
+picturesContainer.appendChild(fragment);
 
 var bigPhoto = document.querySelector('.big-picture');
 
-bigPhoto.querySelector('img').src = pictures[0].url;
-
-bigPhoto.querySelector('.likes-count').innerText = pictures[0].likes;
-bigPhoto.querySelector('.comments-count').innerText = pictures[0].comments.length;
-
 var commentsContainer = document.querySelector('.social__comments');
 
-pictures[0].comments.forEach(function (item) {
-  var comment = '<li class="social__comment social__comment--text"> <img class="social__picture" src="img/avatar-' + randomInteger(1, 6) + '.svg" alt="Аватар комментатора фотографии" width="35" height="35">' + item + '</li>';
-  commentsContainer.insertAdjacentHTML('beforeend', comment);
-});
+var toggleVisibleBigPhoto = function () {
+  bigPhoto.classList.toggle('hidden');
+};
 
-for (var i = 0; i < pictures[0].comments.length; i++) {
-  var currentItem = pictures[0].comments[i];
-  var comment = '<li class="social__comment social__comment--text"> <img class="social__picture" src="img/avatar-' + randomInteger(1, 6) + '.svg" alt="Аватар комментатора фотографии" width="35" height="35">' + currentItem + '</li>';
-  commentsContainer.insertAdjacentHTML('beforeend', comment);
-}
+var hiddenBigPhoto = function () {
+  if(!bigPhoto.classList.contains('hidden')){
+    bigPhoto.classList.add('hidden');
+  }
+};
 
-bigPhoto.classList.remove('hidden');
 document.querySelector('.social__comment-count').classList.add('visually-hidden');
 document.querySelector('.social__comment-loadmore').classList.add('visually-hidden');
+
+//module4-task1
+
+var formEdits = document.querySelector('.img-upload__overlay');
+
+var toggleVisibleFormEdits = function () {
+  formEdits.classList.toggle('hidden');
+};
+
+var hiddenFormEdits = function () {
+  if (!formEdits.classList.contains('hidden')) {
+    formEdits.classList.add('hidden');
+  };
+};
+
+var controlLoad = document.getElementById('upload-file');
+
+controlLoad.addEventListener('change', toggleVisibleFormEdits);
+
+var scalePin = document.querySelector('.scale__pin');
+var scalePinMouseupHandler = function(){
+  alert(coordinatsPinAtLine());
+};
+
+
+var coordinatsPinAtLine = function() {
+  return (scalePin.offsetLeft * 100) / scalePin.parentNode.clientWidth;
+};
+scalePin.addEventListener('mouseup', scalePinMouseupHandler);
+
+var hashtagInput = document.querySelector('.text__hashtags');
+
+hashtagInput.addEventListener('blur', function(evt){
+  var inputValue = evt.target.value.trim();
+  console.log(inputValue[0]);
+  if(inputValue[0] !== '#') {
+    hashtagInput.setCustomValidity('чет не то');
+  }
+});
+
+//отрытие больших фоток 
+
+var showBigPhoto = function (item) {
+  bigPhoto.querySelector('img').src = item.url;
+  bigPhoto.querySelector('.likes-count').innerText = item.likes;
+  bigPhoto.querySelector('.comments-count').innerText = item.comments.length;
+  commentsContainer.innerHTML = '';
+  item.comments.forEach(function (item) {
+  var comment = '<li class="social__comment social__comment--text"> <img class="social__picture" src="img/avatar-' + randomInteger(1, 6) + '.svg" alt="Аватар комментатора фотографии" width="35" height="35">' + item + '</li>';
+    commentsContainer.insertAdjacentHTML('beforeend', comment);
+  });
+  toggleVisibleBigPhoto();
+};
+
+var linkPictures = picturesContainer.querySelectorAll('.picture__link');
+linkPictures.forEach(function (item, index) {
+  item.addEventListener('click', function () {
+    showBigPhoto(pictures[index]);
+  });
+});
+
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 27) {
+    hiddenBigPhoto();
+    hiddenFormEdits();
+  }
+});
+var buttonCloseBigPhoto = document.querySelector('.big-picture__cancel');
+var buttonSettingsPhoto = document.querySelector('.img-upload__cancel');
+
+buttonCloseBigPhoto.addEventListener('click', hiddenBigPhoto);
+buttonSettingsPhoto.addEventListener('click', hiddenFormEdits);
+
+//изменение масштаба
+var scaleValue = document.querySelector('.resize__control--value');
+scaleValue.value = '100%';
+var scaleButtonClickHandler = function(operand){
+  var oldValue = Number(scaleValue.value.substring(0, scaleValue.value.length - 1));
+  switch (operand) {
+    case '+':
+      if (oldValue < 100) {
+        scaleValue.value = (oldValue + 25) + '%';
+      }
+      break;
+
+    case '-':
+      if (oldValue > 0) {
+        scaleValue.value = (oldValue - 25) + '%';
+      }
+      break;
+  }
+};
+
+var scaleMinusButton = document.querySelector('.resize__control--minus');
+var scalePlusButton = document.querySelector('.resize__control--plus');
+
+scaleMinusButton.addEventListener('click', function () {
+  scaleButtonClickHandler('-');
+});
+
+scalePlusButton.addEventListener('click', function () {
+  scaleButtonClickHandler('+');
+});
+
